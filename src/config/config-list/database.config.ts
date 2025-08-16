@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { ENV_NAMESPACES } from './config.tokens';
+import { ENV_NAMESPACES } from '../tokens/config.tokens';
 
 export default registerAs(ENV_NAMESPACES.DATABASE, () => ({
   uri: process.env.DATABASE_URL,
