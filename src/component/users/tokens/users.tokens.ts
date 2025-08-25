@@ -1,4 +1,4 @@
 export enum UserRole {
   ADMIN = 'admin',
-  USER = 'user'
+  WORKSPACE_USER = 'workspace_user'
 }

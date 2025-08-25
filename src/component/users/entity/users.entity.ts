@@ -6,8 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { WorkspaceUser } from '../../workspace-users/entity/workspace-users.entity';
-import { UserRole } from '../tokens/users.tokens';
+import { WorkspaceUser } from 'src/component/workspace-users/entity/workspace-users.entity';
 
 @Entity('users')
 export class User {
@@ -20,9 +19,6 @@ export class User {
   @Column()
   name: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
-  role: UserRole;
-
   @Column({ type: 'text', nullable: true })
   image: string;
 
@@ -32,6 +28,9 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => WorkspaceUser, (workspaceUser) => workspaceUser.user)
-  workspaceUsers: WorkspaceUser[];
+  @OneToMany(
+    () => WorkspaceUser,
+    (WorkspaceUser: WorkspaceUser) => WorkspaceUser.userId,
+  )
+  public WorkspaceUser?: WorkspaceUser[];
 }

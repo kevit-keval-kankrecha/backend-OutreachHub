@@ -4,9 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
-import { WorkspaceUser } from '../../workspace-users/entity/workspace-users.entity';
 
 @Entity('workspaces')
 export class Workspace {
@@ -28,6 +26,4 @@ export class Workspace {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => WorkspaceUser, (workspaceUser) => workspaceUser.workspace)
-  workspaceUsers: WorkspaceUser[];
 }

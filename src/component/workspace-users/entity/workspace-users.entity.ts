@@ -1,33 +1,40 @@
+import { User } from 'src/component/users/entity/users.entity';
+import { UserRole } from 'src/component/users/tokens/users.tokens';
+import { Workspace } from 'src/component/workspace/entity/workspace.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Unique,
+  PrimaryColumn,
+  Index,
+  ManyToOne,
+  JoinColumn,
+  Column,
 } from 'typeorm';
-import { User } from '../../users/entity/users.entity';
-import { Workspace } from '../../workspace/entity/workspace.entity';
-import { WorkspaceUserRole } from '../tokens/workspace-users.tokens';
 
 @Entity('workspace_users')
-@Unique(['user', 'workspace'])
+@Index(['userId', 'workspaceId'], { unique: true })
 export class WorkspaceUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.workspaceUsers)
+  @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user?: User;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.workspaceUsers)
+  @PrimaryColumn('uuid')
+  userId: string;
+
+  @ManyToOne(() => Workspace, (workspace) => workspace.id)
   @JoinColumn({ name: 'workspaceId' })
-  workspace: Workspace;
+  workspace?: Workspace;
 
-  @Column({ type: 'enum', enum: WorkspaceUserRole })
-  role: WorkspaceUserRole;
+  @PrimaryColumn('uuid')
+  workspaceId: string;
+
+  @Column({ type: 'enum', enum: UserRole })
+  role: UserRole;
 
   @CreateDateColumn()
   createdAt: Date;
