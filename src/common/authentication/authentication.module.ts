@@ -5,6 +5,6 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [JwtModule.register({})],
   providers: [AuthenticationService],
-  exports: [],
+  exports: [AuthenticationService],
 })
 export class AuthenticationModule {}

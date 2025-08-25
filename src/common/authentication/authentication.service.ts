@@ -13,6 +13,23 @@ export class AuthenticationService {
     private readonly jwtService: JwtService,
   ) {}
 
+   /**
+   * Generate a JWT
+   * @param payload - data you want to embed in the token (userId, email, roles, etc.)
+   */
+  generateToken(payload: Record<string, any>): string {
+    try {
+      return this.jwtService.sign(payload, {
+        algorithm: this.serverConfigurations.jwtAuthentication.signOptions.algorithm,
+        privateKey: this.serverConfigurations.jwtAuthentication.privateKeyToSignJWT,
+        expiresIn: this.serverConfigurations.jwtAuthentication.signOptions.expiresIn,
+      });
+    } catch (err) {
+      this.logger.error({ err }, `JWT - Auth-Token generation error`);
+      throw err;
+    }
+  }
+
   verifyToken(token: string): any {
     try {
       return this.jwtService.verify(token, {

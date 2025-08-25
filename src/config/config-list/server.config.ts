@@ -25,6 +25,7 @@ export default registerAs(ENV_NAMESPACES.SERVER, () => {
       publicKeyToVerifyJWT: Buffer.from(process.env.PUBLIC_KEY, 'base64').toString('utf8'),
       signOptions: {
         algorithm: 'RS256' as Algorithm,
+        expiresIn: process.env.JWT_EXPIRES_IN ?? '24h'
       },
       customTTL: {
         authTokenTTL: parseInt(process.env.AUTH_TOKEN_TTL || '24', 10) * 60 * 60,
